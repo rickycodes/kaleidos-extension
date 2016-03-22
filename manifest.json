@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+
+  "name": "Kaleidos",
+  "description": "This extension shows a Google Image search result for the current page",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.min.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab"
+  ]
+}
