@@ -21,7 +21,7 @@ function openKaleidos (event) {
   })
 }
 
-function getStyles (stylesObj) {
+function inlineStyles (stylesObj) {
   return Object.keys(stylesObj).map(function (k) {
     return k + ':' + stylesObj[k] + ';'
   }).join('')
@@ -52,7 +52,7 @@ function initialize () {
     link.textContent = '🌀'
     link.setAttribute('href', '#')
     link.setAttribute('data-img', img.src)
-    link.setAttribute('style', getStyles(linkStyles))
+    link.setAttribute('style', inlineStyles(linkStyles))
     link.setAttribute('title', 'create kaleidescope')
     link.addEventListener('click', openKaleidos)
 
@@ -62,7 +62,7 @@ function initialize () {
       'height': img.height + 'px'
     }
     wrap.setAttribute('class', 'kaleidos-wrap')
-    wrap.setAttribute('style', getStyles(wrapStyles))
+    wrap.setAttribute('style', inlineStyles(wrapStyles))
 
     img.parentNode.style.paddingBottom = '0px'
     img.parentNode.insertBefore(wrap, img)
