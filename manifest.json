@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Kaleidos",
-  "description": "This extension shows a Google Image search result for the current page",
+  "description": "",
   "version": "1.0",
   "content_scripts": [
     {
