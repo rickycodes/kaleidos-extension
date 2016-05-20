@@ -1,75 +1,62 @@
-const Kaleidos = require('kaleidos')
+/* global Image */
+(() => {
+  const Kaleidos = require('kaleidos')
 
-function openKaleidos (event) {
-  event.preventDefault()
-  var image = new Image()
-  image.src = this.dataset.img
-
-  var kaleidos = new Kaleidos({
-    src: image,
-    slices: Math.round(Math.random() * 20) + 4
-  })
-
-  image.addEventListener('load', function (event) {
-    kaleidos.init()
-
-    kaleidos.domElement.style.position = 'absolute'
-    kaleidos.domElement.style.left = '50%'
-    kaleidos.domElement.style.top = '50%'
-
-    window.open('about:blank', image.src).document.body.appendChild(kaleidos.domElement)
-  })
-}
-
-function inlineStyles (stylesObj) {
-  return Object.keys(stylesObj).map(function (k) {
-    return k + ':' + stylesObj[k] + ';'
-  }).join('')
-}
-
-function initialize () {
-  var images = document.getElementsByTagName('img')
-
-  for(var i = 0; i < images.length; i++) {
-    var img = images[i]
-
-    var link = document.createElement('a')
-    var linkStyles = {
-      'border-radius': '2px',
-      'padding': '8px 10px 6px',
-      'margin': '6px',
-      'z-index': '9999',
-      'background': '#e3e3e3',
-      'color': 'white',
-      'text-align': 'right',
-      'text-decoration': 'none',
-      'font-size': '10px',
-      'display': 'block',
-      'position': 'absolute',
-      'bottom': 0,
-      'right': 0
-    }
-    link.textContent = '🌀'
-    link.setAttribute('href', '#')
-    link.setAttribute('data-img', img.src)
-    link.setAttribute('style', inlineStyles(linkStyles))
-    link.setAttribute('title', 'create kaleidescope')
-    link.addEventListener('click', openKaleidos)
-
-    var wrap = document.createElement('div')
-    var wrapStyles = {
-      'position': 'relative',
-      'height': img.height + 'px'
-    }
-    wrap.setAttribute('class', 'kaleidos-wrap')
-    wrap.setAttribute('style', inlineStyles(wrapStyles))
-
-    img.parentNode.style.paddingBottom = '0px'
-    img.parentNode.insertBefore(wrap, img)
-
-    wrap.appendChild(img)
-    wrap.appendChild(link)
+  const applyStyle = (el, obj) => {
+    Object.keys(obj).map((k, v) => {
+      el.style[k] = obj[k]
+    })
   }
-}
 
-initialize()
+  const openKaleidos = (src) => {
+    const image = new Image()
+    const clientWidth = document.body.clientWidth
+
+    const kaleidos = new Kaleidos({
+      src: image,
+      slices: Math.round(Math.random() * 20) + 4,
+      radius: clientWidth,
+      offsetX: Math.random() * 800,
+      offsetY: Math.random() * 800
+    })
+
+    image.addEventListener('load', (event) => {
+      const overlay = document.createElement('div')
+
+      kaleidos.init()
+
+      const overlayStyle = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 9999,
+        background: 'black',
+        width: '100%',
+        height: '100%'
+      }
+
+      const kaleidosStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%'
+      }
+
+      applyStyle(overlay, overlayStyle)
+      applyStyle(kaleidos.domElement, kaleidosStyle)
+
+      overlay.appendChild(kaleidos.domElement)
+      document.body.appendChild(overlay)
+
+      overlay.addEventListener('click', (event) => document.body.removeChild(overlay))
+    })
+
+    image.src = src
+  }
+
+  document.body.addEventListener('click', (event) => {
+    if (event.target.tagName === 'IMG') {
+      event.preventDefault()
+      openKaleidos(event.target.src)
+    }
+  })
+})()
