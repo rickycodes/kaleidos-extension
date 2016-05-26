@@ -6,17 +6,8 @@
   const svgStyle = 'padding:4px 0 0 4px;transform:scale(0.8);-webkit-filter:drop-shadow(0 0 3px black);fill:white;'
   const svg = `<svg style="${svgStyle}" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="60px" height="60px" viewBox="0 0 612 612"><path d="${svgPath}"></path></svg>`
   const ref = {}
-  const options = {
-    offsetX: 0,
-    offsetY: 0,
-    offsetRotation: 0,
-    slices: Math.round(Math.random() * 20) + 4,
-    ease: 0.1
-  }
-
-  var tx = options.offsetX
-  var ty = options.offsetY
-  var tr = options.offsetRotation
+  const ease = 0.1
+  var tx, ty, tr = 0
 
   const style = (el, obj) => {
     Object.keys(obj).map((k, v) => {
@@ -54,12 +45,8 @@
 
     const kaleidos = new Kaleidos({
       src: image,
-      slices: options.slices,
-      radius: width,
-      offsetRotation: options.offsetRotation,
-      offsetX: options.offsetX,
-      offsetY: options.offsetY,
-      ease: options.ease
+      slices: Math.round(Math.random() * 20) + 4,
+      radius: width
     })
 
     ref.kaleidos = kaleidos
@@ -111,17 +98,8 @@
   }
 
   const updateKaleidos = (event) => {
-    var dx = event.pageX / window.innerWidth
-    var dy = event.pageY / window.innerHeight
-    var hx = dx - 0.5
-    var hy = dy - 0.5
-    tx = hx * ref.kaleidos.radius * -2
-    ty = hy * ref.kaleidos.radius * 2
-    var delta = tr - ref.kaleidos.offsetRotation
-    var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
-    ref.kaleidos.offsetX += (tx - ref.kaleidos.offsetX) * options.ease
-    ref.kaleidos.offsetY += (ty - ref.kaleidos.offsetY) * options.ease
-    ref.kaleidos.offsetRotation += (theta - ref.kaleidos.offsetRotation) * options.ease
+    ref.kaleidos.offsetX += (event.pageX - ref.kaleidos.offsetX) * ease
+    ref.kaleidos.offsetY += (event.pageY - ref.kaleidos.offsetY) * ease
     ref.kaleidos.draw()
   }
 
