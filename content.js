@@ -93,7 +93,10 @@
       openKaleidos(ref.image)
     }
 
-    if (event.keyCode === 27 && ref.overlay) hideOverlay()
+    if (event.keyCode === 27 && ref.overlay) {
+      event.preventDefault()
+      hideOverlay()
+    }
   })
 
   setupInstructions()
