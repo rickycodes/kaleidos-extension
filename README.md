@@ -1,5 +1,7 @@
 ## kaleidos chrome extention
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/rickycodes/kaleidos-extension.svg)](https://greenkeeper.io/)
+
 turn images into kaleidescope using [kaleidos](https://github.com/rickycodes/kaleidos)
 
 ![instructions](https://cloud.githubusercontent.com/assets/675259/15556614/b97dfd06-229c-11e6-8859-9d2c4209a456.gif)
