@@ -11,9 +11,9 @@
   "author": "",
   "license": "GPL-3.0",
   "devDependencies": {
-    "webpack": "^1.12.14"
+    "webpack": "^4.6.0"
   },
   "dependencies": {
-    "kaleidos": "^1.0.1"
+    "kaleidos": "^2.0.3"
   }
 }
